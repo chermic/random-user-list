@@ -1,30 +1,40 @@
 import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react';
 
-const UserAvatar = (): JSX.Element => (
+type Props = {
+  firstName: string;
+  dob: string;
+  email: string;
+  city: string;
+  twitter: string;
+  imageSrc: string;
+};
+
+export const UserAvatar = ({
+  city,
+  dob,
+  email,
+  firstName,
+  twitter,
+  imageSrc,
+}: Props): JSX.Element => (
   <Card>
-    <Image
-      src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-      wrapped
-      ui={false}
-    />
+    <Image src={imageSrc} wrapped ui={false} />
     <Card.Content>
-      <Card.Header>Matthew</Card.Header>
+      <Card.Header>{firstName}</Card.Header>
       <Card.Meta>
-        <span className="date">Born in 11/5/1985</span>
+        <span className="date">Born in {dob}</span>
       </Card.Meta>
       <Card.Meta>
-        <span className="date">mathew@promail.com</span>
+        <span className="date">{email}</span>
       </Card.Meta>
-      <Card.Description>Matthew lives in Nashville.</Card.Description>
+      <Card.Description>Matthew lives in {city}.</Card.Description>
     </Card.Content>
     <Card.Content extra>
       <a>
         <Icon name="user" />
-        silverswan311
+        {twitter}
       </a>
     </Card.Content>
   </Card>
 );
-
-export default UserAvatar;
