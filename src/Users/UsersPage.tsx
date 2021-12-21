@@ -7,6 +7,7 @@ import { Gender, GenderFilter } from './GenderFilter';
 import { UserAvatar } from './UserAvatar';
 import { UsersListPagination } from './UsersListPagination';
 import styled from 'styled-components';
+import { useColumns } from './hooks/useColumns';
 
 type RandomUserResponse = {
   info: {
@@ -54,6 +55,7 @@ const DEFAULT_PAGE_NUMBER = 1;
 export const UsersPage = (): JSX.Element => {
   const [page, setPage] = useState(DEFAULT_PAGE_NUMBER);
   const [gender, setGender] = useState<Gender | null>(null);
+  const columnsCount = useColumns();
 
   const handleGenderChange = useCallback((gender: Gender | null) => {
     setGender(gender);
@@ -91,10 +93,10 @@ export const UsersPage = (): JSX.Element => {
     <>
       <GenderFilter selectedOption={gender} onChange={handleGenderChange} />
       <UsersGridWrapper>
-        <Card.Group stackable centered itemsPerRow={4}>
+        <Card.Group stackable centered itemsPerRow={columnsCount}>
           {data?.results.map((user) => (
             <UserAvatar
-              key={user.name.last}
+              key={user.name.last + user.name.last}
               city={user.location.city}
               dob={formatDate(user.dob.date)}
               email={user.email}
