@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -15,8 +15,10 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.render(
-  <QueryClientProvider client={queryClient}>
-    <App />
-  </QueryClientProvider>,
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </StrictMode>,
   document.getElementById('root')
 );

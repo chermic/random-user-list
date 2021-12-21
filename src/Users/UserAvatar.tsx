@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import { Card, Icon, Image, List } from 'semantic-ui-react';
 
 type Props = {
   firstName: string;
@@ -28,10 +28,12 @@ export const UserAvatar = ({
       <Card.Meta>
         <span className="date">{email}</span>
       </Card.Meta>
-      <Card.Description>Matthew lives in {city}.</Card.Description>
+      <Card.Description>
+        {firstName} lives in {city}.
+      </Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <a>
+      <a href="#">
         <Icon name="user" />
         {twitter}
       </a>
