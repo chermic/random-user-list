@@ -1,4 +1,4 @@
-import useMedia from 'react-use/esm/useMedia';
+import useMedia from 'react-use/lib/useMedia';
 import { SemanticWIDTHSNUMBER } from 'semantic-ui-react/dist/commonjs/generic';
 
 export const useColumns = (): SemanticWIDTHSNUMBER | undefined => {

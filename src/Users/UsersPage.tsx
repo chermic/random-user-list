@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Card, Dimmer, Loader } from 'semantic-ui-react';
 
@@ -45,7 +45,7 @@ const formatDate = (sourceDate: string) => {
   const date = new Date(sourceDate);
   const day = String(date.getDate()).padStart(2);
   const month = String(date.getMonth() + 1).padStart(2);
-  const year = String(date.getFullYear()).padStart(2);
+  const year = String(date.getFullYear());
 
   return `${day}/${month}/${year}`;
 };
@@ -57,6 +57,13 @@ export const UsersPage = (): JSX.Element => {
   const [gender, setGender] = useState<Gender | null>(null);
   const columnsCount = useColumns();
 
+  const usersListRef = useRef<HTMLDivElement>(null);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    usersListRef.current?.scrollIntoView();
+  };
+
   const handleGenderChange = useCallback((gender: Gender | null) => {
     setGender(gender);
     setPage(DEFAULT_PAGE_NUMBER);
@@ -66,6 +73,9 @@ export const UsersPage = (): JSX.Element => {
     queryKey: ['users', page, gender],
     queryFn: () => requestUsers(page, gender),
     keepPreviousData: true,
+    onSuccess: (data) => {
+      handlePageChange(data.info.page);
+    },
   });
 
   if (isError) {
@@ -83,7 +93,7 @@ export const UsersPage = (): JSX.Element => {
     return (
       <Dimmer active inverted>
         <Loader size="massive" inverted>
-          Loading
+          Loading...
         </Loader>
       </Dimmer>
     );
@@ -92,7 +102,7 @@ export const UsersPage = (): JSX.Element => {
   return (
     <>
       <GenderFilter selectedOption={gender} onChange={handleGenderChange} />
-      <UsersGridWrapper>
+      <UsersGridWrapper ref={usersListRef}>
         <Card.Group stackable centered itemsPerRow={columnsCount}>
           {data?.results.map((user) => (
             <UserAvatar
@@ -110,7 +120,7 @@ export const UsersPage = (): JSX.Element => {
 
       <UsersListPagination
         currentPage={page}
-        onPageClick={setPage}
+        onPageClick={handlePageChange}
         totalPages={100}
       />
     </>

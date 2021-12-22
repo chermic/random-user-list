@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, Icon, Image, List } from 'semantic-ui-react';
+import { Card, Icon, Image } from 'semantic-ui-react';
 
 type Props = {
   firstName: string;
