@@ -24,6 +24,11 @@ const UsersGridWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const requestUsers = async (
   page: number,
   gender: Gender | null
@@ -118,11 +123,13 @@ export const UsersPage = (): JSX.Element => {
         </Card.Group>
       </UsersGridWrapper>
 
-      <UsersListPagination
-        currentPage={page}
-        onPageClick={handlePageChange}
-        totalPages={100}
-      />
+      <PaginationWrapper>
+        <UsersListPagination
+          currentPage={page}
+          onPageClick={handlePageChange}
+          totalPages={100}
+        />
+      </PaginationWrapper>
     </>
   );
 };
